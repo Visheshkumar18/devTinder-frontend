@@ -12,10 +12,15 @@ const Body = () => {
   const fetchUser=async()=>{
     try {
       const res=await axios.get('http://localhost:3000/profile/view',{withCredentials:true});
-      console.log("res",res.data.user);
       dispatch(addUser(res.data.user));
 
     } catch (error) {
+      if(error.response.status==401){
+        toast.error(`${error.response.data}`)
+      }
+      else{
+        toast.error("something went wrong")
+      }
       navigate('/login');
       
     }

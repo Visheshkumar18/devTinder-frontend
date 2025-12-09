@@ -1,7 +1,25 @@
+import axios from "axios";
 import React from "react";
-import { useSelector } from "react-redux";
+import toast from "react-hot-toast";
+import { useDispatch, useSelector } from "react-redux";
+import { removeUser } from "../Store/Slice/userSlice";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+  const HandleLogOut=async()=>{
+    try{
+      const res=await axios.post("http://localhost:3000/logout",{},{withCredentials:true})
+      navigate('/login')
+      toast.success(`${res.data}`);
+
+      dispatch(removeUser());
+
+    }catch(err){
+
+    }
+  }
   const user =useSelector((store)=>store.user);
   return (
     <div className="navbar bg-base-300 shadow-sm">
@@ -15,7 +33,7 @@ const Navbar = () => {
           className="input input-bordered w-24 md:w-auto"
         /> */}
          {user&&(<p>{`Welcome, ${user?.firstName}`}</p>)}
-        <div className="dropdown dropdown-end">
+        {user&&(<div className="dropdown dropdown-end">
           <div
             tabIndex={0}
             role="button"
@@ -44,10 +62,10 @@ const Navbar = () => {
               <a>Settings</a>
             </li>
             <li>
-              <a>Logout</a>
+              <a onClick={HandleLogOut}>Logout</a>
             </li>
           </ul>
-        </div>
+        </div>)}
       </div>
     </div>
   );
