@@ -3,12 +3,13 @@ import Navbar from './Navbar'
 import { Outlet, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addUser } from '../Store/Slice/userSlice'
 
 const Body = () => {
   const navigate=useNavigate();
   const dispatch=useDispatch();
+  const user=useSelector(store=>store.user)
   const fetchUser=async()=>{
     try {
       const res=await axios.get('http://localhost:3000/profile/view',{withCredentials:true});
@@ -17,15 +18,16 @@ const Body = () => {
     } catch (error) {
       if(error.response.status==401){
         toast.error(`${error.response.data}`)
+        navigate('/login');
       }
       else{
         toast.error("something went wrong")
       }
-      navigate('/login');
       
     }
   }
   useEffect(()=>{
+    if(user)return;
     fetchUser();
   },[])
   return (

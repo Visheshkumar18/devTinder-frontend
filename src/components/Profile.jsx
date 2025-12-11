@@ -1,8 +1,15 @@
 import React from 'react'
+import EditProfile from './EditProfile'
+import UserCard from './userCard'
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
-  return (
-    <div>Profile</div>
+  const user=useSelector(store=>store.feed)
+  return  (
+    <div className='flex justify-center items-center'>
+      <EditProfile/>
+      <UserCard user={user}/>
+    </div>
   )
 }
 

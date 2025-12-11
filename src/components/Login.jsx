@@ -8,8 +8,8 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../Store/Slice/userSlice";
 
 const Login = () => {
-    const [email,setEmail]=useState('Vishesh@gmail.com');
-    const [password,setPassword]=useState('Vishesh@123');
+    const [email,setEmail]=useState('vishesh@gmail.com');
+    const [password,setPassword]=useState('123123');
     const navigate=useNavigate();
     const dispatch =useDispatch();
     const HandleLogIn=async()=>{
@@ -17,7 +17,6 @@ const Login = () => {
             const res=await axios.post('http://localhost:3000/login',{
             email,password
         },{withCredentials:true});
-        console.log(res);
         if(res.data){
             toast.success(`${res.data.firstName} LogIn Successfully!!`);
             dispatch(addUser(res.data));
