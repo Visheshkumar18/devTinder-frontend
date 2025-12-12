@@ -7,7 +7,7 @@ const Feed = () => {
   const dispatch=useDispatch();
   const feed =useSelector((store)=>store.user);
   const getFeed=async()=>{
-    if(feed)return;
+      if(feed)return;
     const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/feed`,{withCredentials:true});
     dispatch(addFeed(res.data));
   }
