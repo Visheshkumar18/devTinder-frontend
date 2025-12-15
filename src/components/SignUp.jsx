@@ -10,7 +10,7 @@ const SignUp = () => {
     const [lastName,setLastName]=useState("")
     const [age,setAge]=useState("")
     const [about,setAbout]=useState("Hey, I'm using the Dev Tinder!");
-    const [PhotoUrl,setPhotoUrl]=useState("")
+    const [photoUrl,setPhotoUrl]=useState("")
     const [gender,setGender]=useState("");
     const [email,setEmail]=useState("");
     const [password,setPassword]=useState("")
@@ -19,7 +19,7 @@ const SignUp = () => {
     const HandleSignUp=async()=>{
 
         try {
-            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`,{firstName,lastName,age,about,PhotoUrl,gender,email,password})
+            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/signup`,{firstName,lastName,age,about,photoUrl,gender,email,password})
             if(res.data){
               toast.success("Account created successfully")
               navigate('/login');
@@ -76,7 +76,7 @@ const SignUp = () => {
         placeholder="Photo Url"
         className="input input-neutral"
         onChange={e=>setPhotoUrl(e.target.value)}
-        value={PhotoUrl}
+        value={photoUrl}
       />
        <input type="text" 
        placeholder="About" 
@@ -90,7 +90,7 @@ const SignUp = () => {
         onChange={e=>setGender(e.target.value)}
         value={gender}
         />
-        <button className="btn btn-primary" onClick={HandleSignUp}>Save Profile</button>
+        <button className="btn btn-primary" onClick={HandleSignUp}>Sign up</button>
 
      </div>
      </div>

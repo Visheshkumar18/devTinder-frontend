@@ -25,9 +25,6 @@ const Password = ({setPassword,password}) => {
           required
           value={password}
           placeholder="Password"
-          minlength="6"
-          // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
-          // title="Must be more than 8 characters, including number, lowercase letter, uppercase letter"
           onChange={(e)=>setPassword(e.target.value)}
         />
       </label>

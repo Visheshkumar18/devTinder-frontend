@@ -20,6 +20,9 @@ const Navbar = () => {
 
     }
   }
+  const HandleConnections=async()=>{
+    navigate('/connections');
+  }
   const user =useSelector((store)=>store.user);
   return (
     <div className="navbar bg-base-300 shadow-sm">
@@ -39,10 +42,10 @@ const Navbar = () => {
             role="button"
             className="btn btn-ghost btn-circle avatar m-4"
           >
-            {user&&(<div className="w-10 rounded-full border-amber-100 border-4">
+            {user&&(<div className="w-10 rounded-full">
               <img
                 alt="Tailwind CSS Navbar component"
-                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+                src={user?.photoUrl}
               />
              
             </div>)}
@@ -59,7 +62,7 @@ const Navbar = () => {
               </a>
             </li>
             <li>
-              <a>Settings</a>
+              <a onClick={HandleConnections}>Connections</a>
             </li>
             <li>
               <a onClick={HandleLogOut}>Logout</a>
