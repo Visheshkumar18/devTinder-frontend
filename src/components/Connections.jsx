@@ -33,7 +33,7 @@ const Connections = () => {
       const {firstName,lastName,photoUrl,age,gender,about}=connection;
       return (
         <div className="flex items-center m-4 bg-base-300 rounded-3xl p-3 max-w-1/2">
-          <div><img className="w-20 h-20 rounded-3xl" src={photoUrl} alt="photo" /></div>
+          <div><img className="max-w-20 max-h-20 rounded-3xl" src={photoUrl} alt="photo" /></div>
           <div className="text-left flex flex-col ml-3">
             <h1 className="text-xl font-bold">{firstName+" "+lastName}</h1>
            {age&&gender&&<p>{age+","+gender}</p>}

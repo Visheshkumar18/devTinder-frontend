@@ -23,6 +23,9 @@ const Navbar = () => {
   const HandleConnections=async()=>{
     navigate('/connections');
   }
+  const HandleRequest=async()=>{
+    navigate('/requests');
+  }
   const user =useSelector((store)=>store.user);
   return (
     <div className="navbar bg-base-300 shadow-sm">
@@ -63,6 +66,9 @@ const Navbar = () => {
             </li>
             <li>
               <a onClick={HandleConnections}>Connections</a>
+            </li>
+            <li>
+              <a onClick={HandleRequest}>Friend Requests</a>
             </li>
             <li>
               <a onClick={HandleLogOut}>Logout</a>
