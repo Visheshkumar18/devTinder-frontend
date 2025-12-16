@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addRequest } from "../Store/Slice/requestSlice";
+import { addRequest, removeRequest } from "../Store/Slice/requestSlice";
+
 
 const Requests = () => {
   const dispatch = useDispatch();
@@ -13,10 +14,27 @@ const Requests = () => {
     );
     dispatch(addRequest(res.data.data));
   };
+  const HandleClick=async(_id,status)=>{
+   try {
+     const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/request/review/${status}/${_id}`,{},{withCredentials:true})
+     if(res.data.data){
+
+       console.log(res)
+       console.log(res.data.data)
+        dispatch(removeRequest(_id));
+     }
+   } catch (error) {
+    console.error(
+    error.response?.data?.message || "Request review failed"
+  )
+   }
+  }
+  
   useEffect(() => {
     HandleRequest();
   }, []);
-  if (!requests)
+  console.log(requests)
+  if (!requests || requests.length==0 )
     return (
       <h1 className="text-2xl font-semibold text-center my-3.5">
         No request found
@@ -57,8 +75,9 @@ const Requests = () => {
       </div>
 
       <div className="flex space-x-2 ml-4">
-        <button className="btn btn-primary">Reject</button>
-        <button className="btn btn-secondary">Accept</button>
+        <button className="btn btn-primary" onClick={()=>HandleClick(request._id,"rejected")
+        }>Reject</button>
+        <button className="btn btn-secondary" onClick={()=>HandleClick(request._id,"accepted")}>Accept</button>
       </div>
     </div>
   );
