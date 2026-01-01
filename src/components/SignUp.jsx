@@ -91,7 +91,7 @@ const SignUp = () => {
         value={gender}
         />
         <button className="btn btn-primary" onClick={HandleSignUp}>Sign up</button>
-
+        <p>already have account? <a className="text-primary" href="/login">LogIn</a></p>
      </div>
      </div>
   )

@@ -14,13 +14,14 @@ const Body = () => {
     try {
       if(user)return;
       const res=await axios.get('http://localhost:3000/profile/view',{withCredentials:true});
-      // console.log("res",res.data)
       dispatch(addUser(res.data.user));
 
     } catch (error) {
       if(error.response.status==401){
         toast.error(`${error.response.data}`)
-        navigate('/login');
+        const isAuthPage = location.pathname.includes("/login");
+        console.log(isAuthPage)
+       navigate(isAuthPage ? "/login" : "/signup");
       }
       else{
         toast.error("something went wrong")

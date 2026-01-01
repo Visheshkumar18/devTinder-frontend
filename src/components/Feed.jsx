@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addFeed } from '../Store/Slice/feedSlice';
 const Feed = () => {
   const dispatch=useDispatch();
-  const feed =useSelector((store)=>store.user);
+  const feed =useSelector((store)=>store.feed);
   const getFeed=async()=>{
       if(feed)return;
     const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/feed`,{withCredentials:true});
@@ -16,7 +16,7 @@ const Feed = () => {
   },[])
   return feed&& (
     <div className='flex justify-center items-center'>
-    <UserCard user={feed}/>
+    <UserCard user={feed[0]}/>
     </div>
   )
 }
