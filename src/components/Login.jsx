@@ -8,8 +8,8 @@ import { useDispatch } from "react-redux";
 import { addUser } from "../Store/Slice/userSlice";
 
 const Login = () => {
-    const [email,setEmail]=useState('vishesh@gmail.com');
-    const [password,setPassword]=useState('123123');
+    const [email,setEmail]=useState('');
+    const [password,setPassword]=useState('');
     const navigate=useNavigate();
     const dispatch =useDispatch();
     const HandleLogIn=async()=>{

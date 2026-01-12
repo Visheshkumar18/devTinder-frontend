@@ -41,7 +41,7 @@ const Requests = () => {
       </h1>
     );
   return (
-    <div className="text-center my-5">
+    <div className="text-center my-5 md:flex flex-col">
       <h1 className="text-3xl text-white font-bold">Incomming Request</h1>
       {requests.map((request) => {
   const { _id, firstName, lastName, photoUrl, age, gender, about } =
