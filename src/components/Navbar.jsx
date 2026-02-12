@@ -68,6 +68,9 @@ const Navbar = () => {
               <a onClick={HandleConnections}>Connections</a>
             </li>
             <li>
+             <Link to="/premium">Premium</Link>
+            </li>
+            <li>
               <a onClick={HandleRequest}>Friend Requests</a>
             </li>
             <li>
