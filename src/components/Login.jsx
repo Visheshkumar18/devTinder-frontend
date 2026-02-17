@@ -14,7 +14,7 @@ const Login = () => {
     const dispatch =useDispatch();
     const HandleLogIn=async()=>{
         try {
-            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}`,{
+            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`,{
             email,password
         },{withCredentials:true});
         if(res.data){
