@@ -19,7 +19,7 @@ const App = () => {
       <Provider store={appStore}>
         <Routes>
       <Route path='/' element={<Body/>}>
-       <Route path='/' element={<Feed/>}></Route>
+      <Route path='/' element={<Feed/>}></Route>
       <Route path='/login' element={<Login/>}/>
        <Route path='/signup' element={<SignUp/>}/>
       <Route path='/profile' element={<Profile/>}/>

@@ -13,7 +13,7 @@ const Body = () => {
   const fetchUser=async()=>{
     try {
       if(user)return;
-      const res=await axios.get('http://localhost:3000/profile/view',{withCredentials:true});
+      const res=await axios.get(`${import.meta.env.VITE_BACKEND_URL}/profile/view`,{withCredentials:true});
       dispatch(addUser(res.data.user));
 
     } catch (error) {

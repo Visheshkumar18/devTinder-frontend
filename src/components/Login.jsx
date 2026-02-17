@@ -14,7 +14,7 @@ const Login = () => {
     const dispatch =useDispatch();
     const HandleLogIn=async()=>{
         try {
-            const res=await axios.post('http://localhost:3000/login',{
+            const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}`,{
             email,password
         },{withCredentials:true});
         if(res.data){
