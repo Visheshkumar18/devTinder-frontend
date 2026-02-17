@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useState, useEffect } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
 import { useNavigate } from "react-router-dom";
 import { addUser } from "../Store/Slice/userSlice";
 
