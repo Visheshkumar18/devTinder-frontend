@@ -14,6 +14,10 @@ const Login = () => {
     const dispatch =useDispatch();
     const HandleLogIn=async()=>{
         try {
+          if(!email || !password){
+            toast.error("Please enter valid credentials");
+            return ;
+          }
             const res=await axios.post(`${import.meta.env.VITE_BACKEND_URL}/login`,{
             email,password
         },{withCredentials:true});
