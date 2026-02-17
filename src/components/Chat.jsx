@@ -1,66 +1,91 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { createSocketConnection } from "../utils/socket";
+import { socket } from "../utils/socket";
 import { useSelector } from "react-redux";
 import axios from "axios";
+
 const Chat = () => {
   const { targetUserId } = useParams();
   const [message, setMessage] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const user = useSelector((store) => store.user);
   const userId = user?._id;
-  // when some click on chat page renders socket event emit and  connection established
+
+  // Join chat room once
   useEffect(() => {
-    if(!userId || !targetUserId)return ;
-    const socket = createSocketConnection();
+    if (!userId || !targetUserId) return;
+
     socket.emit("joinChat", { targetUserId, userId });
-    socket.on("messageReceived", ({ text,senderId }) => {
-      setMessage((prev) => [...prev, {text,senderId}]);
-    });
-    // whenever components unloads then disconnect event trigger
-    return () => {
-      socket.disconnect();
+
+    const handleMessage = ({ text, senderId }) => {
+      setMessage((prev) => [...prev, { text, senderId }]);
     };
-  }, [userId,targetUserId]);
-  const fetchChatMessages = async () => {
-    const chatMessages = await axios.get(
-      `${import.meta.env.VITE_BACKEND_URL}/chat/${targetUserId}`,
-      { withCredentials: true },
-    );
-    console.log("chatMessage", chatMessages.data.messages);
-    setMessage(chatMessages.data.messages);
-  };
+
+    socket.on("messageReceived", handleMessage);
+
+    return () => {
+      socket.off("messageReceived", handleMessage);
+    };
+  }, [userId, targetUserId]);
+
+  // Fetch old messages
   useEffect(() => {
+    if (!targetUserId) return;
+
+    const fetchChatMessages = async () => {
+      const chatMessages = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/chat/${targetUserId}`,
+        { withCredentials: true }
+      );
+
+      setMessage(chatMessages.data.messages);
+    };
+
     fetchChatMessages();
-  }, []);
+  }, [targetUserId]);
+
+  // Send message
   const HandleSend = () => {
-    if(!newMessage.trim())return;
-    const socket = createSocketConnection();
-    socket.emit("sendMessage", { userId, targetUserId, text: newMessage.trim() });
+    if (!newMessage.trim()) return;
+
+    socket.emit("sendMessage", {
+      userId,
+      targetUserId,
+      text: newMessage.trim(),
+    });
+
     setNewMessage("");
   };
+
   return (
     <div className="flex flex-col h-[80vh] bg-base-200 rounded-xl p-5 mt-2 w-1/2 mx-auto">
-      {/* Header */}
       <h1 className="text-2xl text-center font-bold mb-4 border-b border-gray-600 pb-2">
         Chat
       </h1>
 
-      {/* Messages Area */}
       <div className="flex-1 overflow-y-auto space-y-3 mb-4">
-        {message.map((msg) => (
+        {message.map((msg, index) => (
           <div
-            key={msg._id}
-            className={`chat  ${
-              (msg.senderId?._id || msg.senderId) === userId ? "chat-end" : "chat-start"
+            key={index}
+            className={`chat ${
+              (msg.senderId?._id || msg.senderId) === userId
+                ? "chat-end"
+                : "chat-start"
             }`}
           >
-            <div className={`chat-bubble ${msg.senderId._id=== userId?"chat-bubble-warning":"chat-bubble-accent"}`}>{msg.text}</div>
+            <div
+              className={`chat-bubble ${
+                (msg.senderId?._id || msg.senderId) === userId
+                  ? "chat-bubble-warning"
+                  : "chat-bubble-accent"
+              }`}
+            >
+              {msg.text}
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Input + Send */}
       <div className="flex gap-2 border-t border-gray-600 pt-3">
         <input
           type="text"
