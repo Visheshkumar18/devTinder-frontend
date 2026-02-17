@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import axios from 'axios';
-import UserCard from './userCard';
+import UserCard from './UserCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { addFeed } from '../Store/Slice/feedSlice';
 const Feed = () => {
